@@ -10,7 +10,7 @@ const BpIcon = styled("span")(({ theme }) => ({
   borderRadius: "50%",
   width: 12, // Adjust the width to make it smaller
   height: 12, // Adjust the height to make it smaller
-  border: "1.5px solid #000", // Set the border to black and make it slightly thicker
+  border: "1.5px solid #444", // Set the border to black and make it slightly thicker
   position: "relative", // Add relative positioning
   ".Mui-focusVisible &": {
     outline: "2px auto rgba(19,124,189,.6)",
