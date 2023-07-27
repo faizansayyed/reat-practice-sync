@@ -10,22 +10,20 @@ const BpIcon = styled("span")(({ theme }) => ({
   borderRadius: "50%",
   width: 12, // Adjust the width to make it smaller
   height: 12, // Adjust the height to make it smaller
-  border: "2px solid #000", // Set the border to black
+  border: "1.5px solid #000", // Set the border to black and make it slightly thicker
   position: "relative", // Add relative positioning
   ".Mui-focusVisible &": {
     outline: "2px auto rgba(19,124,189,.6)",
-    outlineOffset: 2
+    outlineOffset: 2,
   },
   "input:hover ~ &": {
-    backgroundColor: theme.palette.mode === "dark" ? "`#30404d`" : "`#ebf1f5`"
+    backgroundColor: theme.palette.mode === "dark" ? "`#30404d`" : "`#ebf1f5`",
   },
   "input:disabled ~ &": {
     boxShadow: "none",
     background:
-      theme.palette.mode === "dark"
-        ? "rgba(57,75,89,.5)"
-        : "rgba(206,217,224,.5)"
-  }
+      theme.palette.mode === "dark" ? "rgba(57,75,89,.5)" : "rgba(206,217,224,.5)",
+  },
 }));
 
 const BpCheckedIcon = styled(BpIcon)({
@@ -38,11 +36,11 @@ const BpCheckedIcon = styled(BpIcon)({
     position: "absolute", // Add absolute positioning
     top: "50%", // Move the dot to the vertical center
     left: "50%", // Move the dot to the horizontal center
-    transform: "translate(-50%, -50%)" // Center the dot precisely
+    transform: "translate(-50%, -50%)", // Center the dot precisely
   },
   "input:hover ~ &": {
-    backgroundColor: "`#106ba3`"
-  }
+    backgroundColor: "`#106ba3`",
+  },
 });
 
 // Inspired by blueprintjs
