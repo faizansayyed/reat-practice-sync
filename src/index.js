@@ -1,13 +1,16 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import React from "react";
+import ReactDOM from "react-dom/client";
+import "./index.css";
+import NativeSelect from "./NativeSelect";
+import MultipleSelectNative from "./MultipleSelectNative";
+import reportWebVitals from "./reportWebVitals";
+import CustomMultiSelect from "./CustomMultiSelect";
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+const root = ReactDOM.createRoot(document.getElementById("root"));
+const options = ["Option 1", "Option 2", "Option 3", "Option 4","Option 5","Option 6","Option 7"];
 root.render(
   <React.StrictMode>
-    <App />
+    <CustomMultiSelect options={options} />
   </React.StrictMode>
 );
 
