@@ -55,3 +55,22 @@ code {
 .option.selected {
   background-color: `#f0f0f0`;
 }
+
+/* add sidebar selected css */
+
+/* Define the arrow icon using pseudo-elements */
+.sidebar-item.selected::after {
+  content: "\2192"; /* Right arrow character (→) */
+  position: absolute; /* Position the arrow absolutely */
+  top: 50%; /* Adjust vertical position */
+  right: 10px; /* Adjust horizontal position */
+  transform: translateY(-50%); /* Center the arrow vertically */
+  /* Add other styles as needed (font-size, color, etc.) */
+}
+
+/* Style the selected item to make it visually distinct */
+.sidebar-item.selected {
+  font-weight: bold;
+  color: blue; /* Choose your desired color for the selected item */
+  position: relative; /* Make sure the selected item is positioned relatively */
+}
