@@ -6,7 +6,7 @@ const TextWithLinks = () => {
     Visit our website at http://www.example.com for more info.
     For support, email us at support@example.com or call 123-456-7890.
     Check out https://github.com for repositories.
-    Avoid this URL: https://example...
+    Avoid this incomplete URL: https://example...
     Email us at ftest@g... (should be ftest@gmail.com)
     Call us at 123-456-7890 (should be a valid phone number)...
   `;
@@ -27,7 +27,7 @@ const TextWithLinks = () => {
   const options = {
     // Define custom link components based on link types
     format: (value, type) => {
-      if (type === "url" && isValidUrl(value)) {
+      if (type === "url" && isValidUrl(value) && !value.endsWith("...")) {
         const url = new URL(value);
         const domainName = url.hostname.replace(/^www\./, ""); // Remove "www." if present
         return (
@@ -41,6 +41,26 @@ const TextWithLinks = () => {
         return <a href={`tel:${value}`}>{value}</a>;
       } else {
         return <Text>{value}</Text>; // Render as plain text
+      }
+    },
+    formatHref: {
+      url: (href, type) => {
+        if (isValidUrl(href) && !href.endsWith("...")) {
+          return href; // Use the original URL as href
+        }
+        return ""; // Return empty href for invalid URLs
+      },
+      email: (href, type) => {
+        if (type === "email") {
+          return `mailto:${href}`; // Use the mailto link as href
+        }
+        return ""; // Return empty href for other types
+      },
+      phone: (href, type) => {
+        if (type === "phone") {
+          return `tel:${href}`; // Use the tel link as href
+        }
+        return ""; // Return empty href for other types
       }
     }
   };
