@@ -6,27 +6,22 @@ const TextWithLinks = () => {
     Visit our website at http://www.example.com for more info.
     For support, email us at support@example.com or call 123-456-7890.
     Check out https://github.com for repositories.
-    Avoid this incomplete URL: https://example...
+    Avoid this URL: https://example...
     Email us at ftest@g... (should be ftest@gmail.com)
     Call us at 123-456-7890 (should be a valid phone number)...
   `;
 
   const isValidUrl = (value) => {
-    // Regular expression to validate URLs
-    const urlRegex = /^(https?:\/\/)?([\w.]+)\.([a-z]{2,6}\.?)(\/[\w]*)*\/?$/i;
-    return urlRegex.test(value);
+    try {
+      new URL(value);
+      return true;
+    } catch (error) {
+      return false;
+    }
   };
 
-  const isValidEmail = (value) => {
-    // Regular expression to validate email addresses
-    const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
-    return emailRegex.test(value);
-  };
-
-  const isValidPhoneNumber = (value) => {
-    // Regular expression to validate phone numbers
-    const phoneRegex = /^\d{3}-\d{3}-\d{4}$/;
-    return phoneRegex.test(value);
+  const Text = ({ children }) => {
+    return <span>{children}</span>;
   };
 
   const options = {
@@ -40,12 +35,12 @@ const TextWithLinks = () => {
             {domainName}
           </a>
         );
-      } else if (type === "email" && isValidEmail(value)) {
+      } else if (type === "email") {
         return <a href={`mailto:${value}`}>{value}</a>;
-      } else if (type === "phone" && isValidPhoneNumber(value)) {
+      } else if (type === "phone") {
         return <a href={`tel:${value}`}>{value}</a>;
       } else {
-        return value; // Return original text for invalid links
+        return <Text>{value}</Text>; // Render as plain text
       }
     }
   };
