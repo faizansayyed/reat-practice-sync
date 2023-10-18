@@ -1,0 +1,11 @@
+#Application/MicroService Name
+appName: myapp-chatbot-ui
+
+#Number of pod replicas defined in Deployment
+podReplicas: 1
+
+image:
+  #Repository Name that hosts container image
+  repo: 0000777776.dkr.ecr.us-east-1.amazonaws.com/BB00002222-myapp-chatbot-ui
+  #Image Tag to deploy
+  tag: develop

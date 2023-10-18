@@ -1,0 +1,30 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ .Values.appName }}-ingress
+  annotations:
+    kubernetes.io/ingress.class: alb
+    alb.ingress.kubernetes.io/scheme: internal
+    alb.ingress.kubernetes.io/target-type: ip
+    alb.ingress.kubernetes.io/group.name: app-pr1
+    # Enable Port 443 for TLS
+    alb.ingress.kubernetes.io/listen-ports: '[{"HTTPS":443}, {"HTTP":80}]'
+    alb.ingress.kubernetes.io/certificate-arn: {{ .Values.certificate_arn }}
+  labels:
+    app: {{ .Values.appName }}
+spec:
+  rules:
+    - host: {{ .Values.ingress_hostname }}
+      http:
+        paths:
+        - path: /
+          pathType: Prefix
+          backend:
+            service:
+              name: {{ .Values.appName }}
+              port:
+                number: 8071
+  # tls:
+  # - hosts:
+  #     - {{ .Values.ingress_hostname }}
+  #   secretName: ingress-tls

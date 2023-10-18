@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.appName }}
+spec:
+  replicas: {{ .Values.podReplicas }}
+  selector:
+    matchLabels:
+      # Must match service selector
+      app: {{ .Values.appName }}
+  strategy:
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        name: {{ .Values.appName }}
+        app: {{ .Values.appName }}
+        deploymentconfig: {{ .Values.appName }}
+    spec:
+      containers:
+        - name: {{ .Values.appName }}
+          image: {{ .Values.image.repo }}:{{ .Values.image.tag }}
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8071
+              protocol: TCP
+          env:
+            - name: OPENAI_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: openai-api-key
+                  key: API_KEY
+          envFrom:
+            - configMapRef:
+                name: openai-config

@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: openai-config
+data:
+  DEFAULT_MODEL: 'gpt-3.5-turbo'
+  OPENAI_API_HOST: 'https://api.openai.com'
+  DEFAULT_TEMPERATURE: '1'
+  OPENAI_API_TYPE: 'openai'
+  OPENAI_API_VERSION: '2023-03-15-preview'
+  OPENAI_ORGANIZATION: ''
+  AZURE_DEPLOYMENT_ID: ''

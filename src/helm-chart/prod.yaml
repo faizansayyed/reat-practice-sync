@@ -1,0 +1,7 @@
+cluster_name: myapp-prod-eks-01
+namespace: BB00002222-fvom-prod-01
+app_pods: 1
+certificate_arn: <cert>
+ingress_hostname: chatbot-ui.app-pr1.fvom.aws.fpom.com
+
+REACT_APP_ENVR: prod

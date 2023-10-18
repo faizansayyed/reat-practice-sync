@@ -1,0 +1,8 @@
+cluster_name: fvom-blueprint-control-plane
+namespace: BB00002222-fvom-dev-01
+app_pods: 1
+certificate_arn: <cert>
+
+ingress_hostname: chatbot-ui.app-pr1.fvom.aws-dev.fpom.com
+
+REACT_APP_ENVR: dev

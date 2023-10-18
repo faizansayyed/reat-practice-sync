@@ -1,0 +1,55 @@
+version: 0.2
+env:
+  variables:
+    twistlock_url: https://us-east1.cloud.twistlock.com/us-2-158315413
+    ATMID: BB00002222
+    APP_NAME: myapp-chatbot-ui
+    SONATYPE_IQ_API_VERSION: "1.80.0-01"
+    TMP_BUILD_DIR: "buildlib"
+    TMP_OSS_DIR: "open-source-deps"
+    IQ_STAGE: "build"
+  secrets-manager:
+    SONATYPEIQ_API_ID: deveng-nexusiq:nexusiq-id
+    SONATYPEIQ_API_KEY: deveng-nexusiq:nexusiq-key
+    prisma_access_key: prisma_cloud_compute_ci_scan_keys:prisma_access_key
+    prisma_secret_key: prisma_cloud_compute_ci_scan_keys:prisma_secret_key
+phases:
+  install:
+    runtime-versions:
+      nodejs: 16
+    commands:
+      - cd $CODEBUILD_SRC_DIR/application-source
+      - ls -lrt
+      - echo `aws --version`
+      - npm install
+      - cd ..
+      - echo Starting Install Phase
+      - echo $REGION
+      - echo "===== print nodev====="
+      - echo node -v
+      - pip install yq
+      - pip3 install awscli==1.25.18 --user
+      - echo `aws --version`
+
+      ## Install Helm
+      - echo Installing Helm
+      - curl -v https://github.com/helm/helm/releases
+      - curl -v https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 > get_helm.sh
+      - chmod 700 get_helm.sh
+      - ./get_helm.sh
+      #- DESIRED_VERSION=v3.8.2 ./get_helm.sh
+      - helm version
+      - (cd ./codebuild && ls && make download-twistcli)
+      - /tmp/twistlock-cli --version
+      # - (cd ./codebuild && make get-compliance-dependencies)
+      # - (cd ./codebuild && make pack-for-scans)
+      # - (cd ./codebuild && make open-source-scan)
+  build:
+    commands:
+      - ls
+      - echo "Starting Build Phase..."
+      - chmod +x ./codebuild/build.sh
+      - ./codebuild/build.sh
+artifacts:
+    files: imagedefinitions.json
+	

@@ -1,0 +1,29 @@
+
+1. **build.sh**:
+   - In the "Build Docker Image" phase, you're attempting to build the Docker image with `npm run-script build` 
+   before the Docker build. This might cause issues as the Docker context is being changed to the parent directory and then back.
+    It would be cleaner to build the application within the Docker context.
+   
+2. **helm-chart/templates/deployment.yaml**:
+   - In the `image` field, there's an issue with double curly braces in the `.Values.appName` value and the label selector.
+    Replace `{ { .Values.appName } }` with `{{ .Values.appName }}`.
+
+3. **helm-chart/templates/ingress.yaml**:
+   - The same issue exists with double curly braces in the host path and label selector.
+    Replace `{ { .Values.appName } }` with `{{ .Values.appName }}`.
+
+4. **helm-chart/templates/service.yaml**:
+   - Similar to previous files, replace `{ { .Values.appName } }` with `{{ .Values.appName }}`.
+
+5. **helm-chart/values.yaml**:
+   - It seems you are missing the `namespace` key under the `spec` section of the `Service`. 
+   Add `namespace: {{ .Values.namespace }}`.
+
+6. **Dockerfile**:
+   - The base image used in the `production` stage is `node:19-alpine`, but Node.js 19 does not exist.
+    The latest LTS version of Node.js is recommended, such as `node:14`. Update the base image accordingly.
+
+7. **Dockerfile**:
+   - In the `production` stage, the `CMD` is set to `["npm", "start"]`. 
+   However, the provided Dockerfile doesn't include a start script. 
+   You might need to update this based on how your application is structured.
