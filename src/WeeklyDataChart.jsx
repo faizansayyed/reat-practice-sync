@@ -31,15 +31,16 @@ const WeeklyNewUsersChart = ({ weeklyAllUserModel }) => {
         const currentYear = currentDate.getFullYear();
 
         // Calculate the start month for the 11-month window
-        const startMonth = currentMonth - MONTHS_TO_CONSIDER;
-        const startYear = startMonth <= 0 ? currentYear - 1 : currentYear;
+        let startMonth = currentMonth - MONTHS_TO_CONSIDER;
+        let startYear = currentYear;
 
-        // Calculate the end month for the 11-month window
-        const endMonth = currentMonth;
-        const endYear = currentYear;
+        while (startMonth <= 0) {
+          startMonth += 12;
+          startYear -= 1;
+        }
 
         filteredYearData = yearData
-          .filter(({ year }) => year >= startYear && year <= endYear)
+          .filter(({ year }) => year >= startYear && year <= currentYear)
           .map(({ year, monthData }) => ({
             year,
             monthData: monthData.filter(({ month }) => {
@@ -48,8 +49,8 @@ const WeeklyNewUsersChart = ({ weeklyAllUserModel }) => {
 
               return (
                 (year === startYear && monthNumber >= startMonth) ||
-                (year === endYear && monthNumber <= endMonth) ||
-                (year > startYear && year < endYear)
+                (year === currentYear && monthNumber <= currentMonth) ||
+                (year > startYear && year < currentYear)
               );
             })
           }));
